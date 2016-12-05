@@ -71,12 +71,18 @@ class MeepLib(bpy.types.BlendDataLibraries):
 
 class MeepGroup(bpy.types.PropertyGroup):
     """A group of all potential Meep Properties"""
+    meep_int = bpy.props.IntProperty()
+    meep_float = bpy.props.FloatProperty()
+    meep_string = bpy.props.StringProperty()
+
     meep_props = MeepLib.append_objects() + MeepLib.append_materials()
 
     # we will want to learn more about data vs property and how to load them both into a prop. Or we can create an
     # operator class for each property, but that seems dumb.
     # see: https://www.blender.org/api/blender_python_api_2_67_1/bpy.props.html
     # and http://blender.stackexchange.com/questions/42879/create-drop-down-list-in-menu-panel
+    # we will have to build a dictionary in Operator and then call it here? See:
+    # https://www.blender.org/api/blender_python_api_2_66_release/bpy.props.html
 
 
 
