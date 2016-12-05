@@ -17,32 +17,35 @@ class MeepLib(bpy.types.BlendDataLibraries):
     bl_idname = "MEEPLIB_OT"
     filepath = "E:\\BlenderLearn\Meeps_Origin.blend" # you can change this to any file location and name.
 
-    def append_objects(layout):
+    def append_objects(): #formerly used argument "layout"
         # apparently BlendDataLibrary methods don't take the "self" argument. This makes me think I should move the
         # heavy lifting down to MeepObjects if I can get that up and running.
         # scn = context.scene
         with MeepLib.load(MeepLib.filepath, link=False) as (data_from, data_to):
             data_to.objects = data_from.objects
-            for each in data_to.objects:
-                row = layout.row()
-                row.label(text=each)
+            return list(data_from.objects)
+            # for each in data_to.objects:
+                # row = layout.row()
+                # row.label(text=each)
                 # "each" is a str type according to this.
                 # code runs and prints names with row.label, but does nothing with row.prop nor with row.operator
                 #row.prop(scn, each, text=each.name)
 
-    def append_materials(layout):
+    def append_materials(): #formerly used argument "layout"
         # apparently BlendDataLibrary methods don't take the "self" argument. This makes me think I should move the
         # heavy lifting down to MeepObjects if I can get that up and running.
         # scn = context.scene
         with MeepLib.load(MeepLib.filepath, link=False) as (data_from, data_to):
             data_to.materials = data_from.materials
-            for each in data_to.materials:
-                row = layout.row()
-                row.label(text=each)
+            return list(data_from.materials)
+            # for each in data_to.materials:
+                # row = layout.row()
+                # row.label(text=each)
                 # "each" is a str type according to this.
                 # code runs and prints names with row.label, but does nothing with row.prop nor with row.operator
                 #row.prop(scn, each, text=each.name)
 
+# should discover how to iterate through types and simply run the appends for each type in a predefined list.
 
 # Somehow we need to link the objects called within MeepLib into MeepObjects.
 # Possible path: use wm.append to call the objects right here in the Operator and eliminate the need for MeepLib.
@@ -64,6 +67,17 @@ class MeepLib(bpy.types.BlendDataLibraries):
     #
     # def invoke(self, context):
         # we need to figure out how to reference the name of the button.
+
+
+class MeepGroup(bpy.types.PropertyGroup):
+    """A group of all potential Meep Properties"""
+    meep_props = MeepLib.append_objects() + MeepLib.append_materials()
+
+    # we will want to learn more about data vs property and how to load them both into a prop. Or we can create an
+    # operator class for each property, but that seems dumb.
+    # see: https://www.blender.org/api/blender_python_api_2_67_1/bpy.props.html
+    # and http://blender.stackexchange.com/questions/42879/create-drop-down-list-in-menu-panel
+
 
 
 class MeepPanel(bpy.types.Panel):
