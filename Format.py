@@ -235,3 +235,78 @@ def unregister():
 
 if __name__ == "__main__":
     register()
+
+
+
+
+
+
+# also possibly:
+# import bpy
+#
+#
+# #    LIST
+# class myList(bpy.types.PropertyGroup):
+#     name = bpy.props.StringProperty(name="Test Prop", default="Unknown")
+#     value = bpy.props.IntProperty(name="Test Prop", default=7)
+#
+#
+# bpy.utils.register_class(myList)
+#
+#
+# def list_clear(li):
+#     my_list = li  # sce.theList
+#     print("List Clear")
+#     n = len(my_list)
+#     for i in range(0, n + 1):
+#         my_list.remove(n - i)
+#     return
+#
+#
+# def list_set(l, li):
+#     for e in l:
+#         my_item = li.add()
+#         my_item.name = e
+#         my_item.value = 1000
+#     return
+#
+#
+# def list_print(li):
+#     for my_item in li:  # bpy.context.scene.theList:
+#         print(my_item.name, my_item.value)
+#     return
+#
+#
+# class testing(bpy.types.Operator):
+#     bl_idname = "testing.tester"
+#     bl_label = "Add Mesh Object"
+#
+#     bl_description = "Test class function"
+#     bl_options = {'REGISTER', 'UNDO'}
+#
+#     theList = bpy.props.CollectionProperty(type=myList)
+#     theList_index = bpy.props.IntProperty(min=-1, default=-1)
+#
+#     def invoke(self, context, event):
+#         list_clear(self.theList)
+#         l = ["one", "two", "three"]
+#         list_set(l, self.theList)
+#         return self.execute(context)
+#
+#     def execute(self, context):
+#         print("TESTING")
+#         list_print(self.theList)
+#         return {'FINISHED'}
+#
+#
+# class SimplePanel(bpy.types.Panel):
+#     bl_label = "My Simple Panel"
+#     bl_space_type = 'VIEW_3D'
+#     bl_region_type = 'TOOLS'
+#
+#     def draw(self, context):
+#         self.layout.operator("testing.tester")
+#
+#
+# bpy.utils.register_class(testing)
+# bpy.utils.register_class(SimplePanel)
